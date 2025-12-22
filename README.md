@@ -1,0 +1,1 @@
+This project serves as a useful way to implement a simple end-to-end application that keeps track of someone's finances by entering and editing financial movements and viewing them using several kpi's and tables.
