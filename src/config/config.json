@@ -1,0 +1,7 @@
+{
+    "app_name": "Finance Tracker",
+    "version": "0.0.1",
+    "default_currency": "EUR",
+    "data_file_name": "movements.csv",
+    "categories_file_name": "categories.yml"
+}
