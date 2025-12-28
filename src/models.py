@@ -1,7 +1,10 @@
 import pandas as pd
 class MoneyMovement:
     def __init__(self, row, date, description, category, income, expense):
-        self.data = self.define_movement(row, date, description, category, income, expense)
+        if row:
+            self.data = self.define_movement(row, date, description, category, income, expense)
+        else:
+            self.data = self.define_first_movement(date, description, category, income, expense)
 
         def define_movement(self, row, date, description, category, income, expense):
             month = self.return_month(date)
@@ -17,6 +20,21 @@ class MoneyMovement:
                 "income": float(income),
                 "expense": float(expense),
                 "balance": absolute_balance
+            })
+        
+        def define_first_movement(self, date, description, category, income, expense):
+            month = self.return_month(date)
+            relative_balance = float(income) - float(expense)
+            id = 1
+            return pd.Series({
+                "id": id,
+                "date": date,
+                "month": month,
+                "description": description,
+                "category": category,
+                "income": float(income),
+                "expense": float(expense),
+                "balance": relative_balance
             })
 
         def return_month(date):
