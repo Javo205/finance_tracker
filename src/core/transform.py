@@ -1,5 +1,5 @@
 from src.models import MoneyMovement
-from src.config.config import Config
+from src.config import Config
 import pandas as pd
 
 class Transform:
