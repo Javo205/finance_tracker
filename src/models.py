@@ -1,18 +1,21 @@
 import pandas as pd
 class MoneyMovement:
-    def __init__(self, row, date, description, category, income, expense):
-        if row:
+    def __init__(self, base_data, date, description, category, income, expense):
+
+        if not base_data.empty:
+            row = base_data.iloc[-1]
             self.data = self.define_movement(row, date, description, category, income, expense)
         else:
             self.data = self.define_first_movement(date, description, category, income, expense)
 
     def define_movement(self, row, date, description, category, income, expense):
         month = self.return_month(date)
+        income, expense = self.check_none(income, expense)
         relative_balance = float(income) - float(expense)
         absolute_balance = relative_balance + row["balance"]
-        id = row["id"] + 1
+        row_id = row["id"] + 1
         return pd.Series({
-            "id": id,
+            "id": row_id,
             "date": date,
             "month": month,
             "description": description,
@@ -24,10 +27,11 @@ class MoneyMovement:
     
     def define_first_movement(self, date, description, category, income, expense):
         month = self.return_month(date)
+        income, expense = self.check_none(income, expense)
         relative_balance = float(income) - float(expense)
-        id = 1
+        row_id = 1
         return pd.Series({
-            "id": id,
+            "id": row_id,
             "date": date,
             "month": month,
             "description": description,
@@ -54,4 +58,12 @@ class MoneyMovement:
             "12": "diciembre"
         }
         return dict_month[month]
+
+    @staticmethod
+    def check_none(income, expense):
+        if income is None:
+            income = 0
+        if expense is None:
+            expense = 0
+        return income, expense
         
