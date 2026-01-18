@@ -7,6 +7,8 @@ class MoneyMovement:
             self.data = self.define_movement(row, date, description, category, income, expense)
         else:
             self.data = self.define_first_movement(date, description, category, income, expense)
+        self.data["date"] = self.data["date"].to_datetime()
+
 
     def define_movement(self, row, date, description, category, income, expense):
         month = self.return_month(date)
@@ -24,7 +26,8 @@ class MoneyMovement:
             "expense": float(expense),
             "balance": absolute_balance
         })
-    
+
+
     def define_first_movement(self, date, description, category, income, expense):
         month = self.return_month(date)
         income, expense = self.check_none(income, expense)
@@ -41,7 +44,8 @@ class MoneyMovement:
             "balance": relative_balance
         })
 
-    def return_month(self, date):
+    @staticmethod
+    def return_month(date):
         month = date.split("/")[1]
         dict_month = {
             "01": "enero",
